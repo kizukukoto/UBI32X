@@ -1,0 +1,6 @@
+# Ubicom toolchain path from kevin
+export TPATH_UC=/opt/ubi32_sdk
+export TPATH_KC=/opt/ubi32_sdk
+export TPATH_LIBTGZ=/opt/ubi32_sdk/lib.tgz
+export LD_LIBRARY_PATH=/opt/ubi32_sdk/lib
+export PATH=/opt/ubi32_sdk/bin:$PATH

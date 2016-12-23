@@ -1,0 +1,76 @@
+=================================
+ Notice
+=================================
+
+Work in progress!
+
+=================================
+ GPL Notice
+=================================
+
+This repository uses the following sources:
+
+    Github.com/patrick-ken
+    https://github.com/patrick-ken/MyNet_N900/blob/master/ReadMeFirst.txt
+    
+    Western Digital My Net N900 GPL Firmware release (@Alphanetworks)    
+    https://github.com/kizukukoto/WD900GPL
+    
+Available source code:
+
+    Github.com/kizukukoto
+    https://github.com/kizukukoto/WD900X
+    
+================================
+ Introduction
+================================
+
+This file will show you how to build the GPL linux system.
+
+    1. Install Fedora Linux 12 (choose Software Development) on 32bit CPU.
+    2. Login as a normal user (have the root password handy).
+    3. Upgrade the version git from 1.65 to the latest one.
+       Use this guide http://git-scm.com/book/en/v2/Getting-Started-Installing-Git
+            - Download the latest git source tarball
+            - Extract and use the following commands to upgrade git:
+                    $ make configure
+                    $ ./configure --prefix=/usr
+                    $ make all
+                    $ su
+                    # make install
+                    # exit
+    4. Create and change into directory where you'll put the source code (~/Development works fine)
+    5. Clone the custom firmware repository from GitHub.
+            $ git clone https://github.com/kizukukoto/WD900X.git
+    
+================================
+ Setup build environment
+================================
+
+    1. Login as a normal user.
+    2. Navigate to your source code directory.
+	    $ cd /WD900X
+    3. Switch to root permission (superuser mode)
+            $ su
+    4. Install fakeroot
+            # rpm -ivh ./include/fakeroot-1.12.2-22.fc12.i686.rpm
+            # rpm -ivh ./include/fakeroot-libs-1.12.2-22.fc12.i686.rpm
+    5. Use this command to setup toolchain
+            # make
+    6. Switch back to normal permission (normaluser mode)
+	    # exit
+    
+================================
+ Compiling source code
+================================
+
+    1. Login as a normal user.
+    2. Navigate to your source code directory.
+	    $ cd /WD900X
+    3. Load the necessary environment variables.
+            $ source ./setupenv
+    4. Building the image
+	    $ make
+    
+    After make finishes successfully, you will find the image file in ./build/release    
+

@@ -1,0 +1,5 @@
+/* GNU ld script
+ * Use the shared library, but some functions are only in
+ * the static library, so try that secondarily. */
+OUTPUT_FORMAT ( elf32-ubicom32fdpic )
+GROUP ( /lib/march-ubicom32v5/libc.so.0 /usr/lib/march-ubicom32v5/uclibc_nonshared.a AS_NEEDED ( /lib/march-ubicom32v5/ld-uClibc.so.0 ) )
