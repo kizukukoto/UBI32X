@@ -44,6 +44,6 @@ make_kernel:
 clean_kernel:
 	@echo -e "\033[32m  LOG       Kernel\033[0m"
 	@echo  "  CLEAN     "/$(KERNEL_DIR)/$(KERNEL_VERSION)
-	@$(MAKE) -C $(SOURCE)/$(KERNEL_DIR)/$(KERNEL_VERSION) clean
+	@$(MAKE) -C $(SOURCE)/$(KERNEL_DIR)/$(KERNEL_VERSION) clean $(DEBUG)
 	@rm -f $(SOURCE)/$(BUILD_DIR)/vmlinux.elf
 

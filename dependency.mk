@@ -20,44 +20,43 @@ dependency:
 	@[ -s $(SOURCE)/$(CONFIG_DIR)/$(KERNEL_CONFIG) ] || { echo -e "\033[33m  LOG       Missing "/$(BOOTLOADER_DIR)"/include/ocm_size.h\033[0m"; exit 1; }
 	@echo  "  CHECK     "/$(BOOTLOADER_DIR)"/mainexec.elf"
 	@[ -s $(SOURCE)/$(BOOTLOADER_DIR)"/mainexec.elf" ] || { echo -e "\033[33m  LOG       Missing "/$(BOOTLOADER_DIR)"/mainexec.elf\033[0m"; exit 1; }
-	@if [ "$(CONFIG_UBICOM32_MODULE_NA)" == "y" ]; then \
-		echo  "  CHECK     "/$(SYSTEM_DIR)"/include/modules/net/ubicom_na_connection_manager_ipv4.ko"; \
-		[ -s $(SOURCE)/$(SYSTEM_DIR)/include/modules/net/ubicom_na_connection_manager_ipv4.ko ] || { echo -e "\033[33m  LOG       Missing "/$(SYSTEM_DIR)"/include/modules/net/ubicom_na_connection_manager_ipv4.ko\033[0m"; exit 1; }; \
-		echo  "  CHECK     "/$(SYSTEM_DIR)"/include/modules/net/ubicom_na_connection_manager_ipv6.ko"; \
-		[ -s $(SOURCE)/$(SYSTEM_DIR)/include/modules/net/ubicom_na_connection_manager_ipv6.ko ] || { echo -e "\033[33m  LOG       Missing "/$(SYSTEM_DIR)"/include/modules/net/ubicom_na_connection_manager_ipv6.ko\033[0m"; exit 1; }; \
-	else \
-		if [ "$(CONFIG_UBICOM32_MODULE_QOS)" == "y" ] || [ "$(CONFIG_UBICOM32_MODULE_SHAPER)" == "y" ]; then \
+	@if [ "$(CONFIG_NETWORK_HARDWARE)" == "y" ]; then \
+		if [ "$(CONFIG_NETWORK_HARDWARE_IPV4)" == "y" ] && [ "$(CONFIG_NETWORK_IPV6_ONLY)" != "y"  ]; then \
 			echo  "  CHECK     "/$(SYSTEM_DIR)"/include/modules/net/ubicom_na_connection_manager_ipv4.ko"; \
 			[ -s $(SOURCE)/$(SYSTEM_DIR)/include/modules/net/ubicom_na_connection_manager_ipv4.ko ] || { echo -e "\033[33m  LOG       Missing "/$(SYSTEM_DIR)"/include/modules/net/ubicom_na_connection_manager_ipv4.ko\033[0m"; exit 1; }; \
+		fi; \
+		if [ "$(CONFIG_NETWORK_HARDWARE_IPV6)" == "y" ] && [ "$(CONFIG_NETWORK_IPV6)" == "y"  ]; then \
 			echo  "  CHECK     "/$(SYSTEM_DIR)"/include/modules/net/ubicom_na_connection_manager_ipv6.ko"; \
 			[ -s $(SOURCE)/$(SYSTEM_DIR)/include/modules/net/ubicom_na_connection_manager_ipv6.ko ] || { echo -e "\033[33m  LOG       Missing "/$(SYSTEM_DIR)"/include/modules/net/ubicom_na_connection_manager_ipv6.ko\033[0m"; exit 1; }; \
-		fi \
-	fi
-	@if [ "$(CONFIG_UBICOM32_MODULE_QOS)" == "y" ]; then \
-		echo  "  CHECK     "/$(SYSTEM_DIR)"/include/modules/net/ubicom_streamengine_tracker.ko"; \
-		[ -s $(SOURCE)/$(SYSTEM_DIR)/include/modules/net/ubicom_streamengine_tracker.ko ] || { echo -e "\033[33m  LOG       Missing "/$(SYSTEM_DIR)"/include/modules/net/ubicom_streamengine_tracker.ko\033[0m"; exit 1; }; \
-		echo  "  CHECK     "/$(SYSTEM_DIR)"/include/modules/net/ubicom_streamengine_db.ko"; \
-		[ -s $(SOURCE)/$(SYSTEM_DIR)/include/modules/net/ubicom_streamengine_db.ko ] || { echo -e "\033[33m  LOG       Missing "/$(SYSTEM_DIR)"/include/modules/net/ubicom_streamengine_db.ko\033[0m"; exit 1; }; \
-		echo  "  CHECK     "/$(SYSTEM_DIR)"/include/modules/net/ubicom_streamengine_tracker_tcp.ko"; \
-		[ -s $(SOURCE)/$(SYSTEM_DIR)/include/modules/net/ubicom_streamengine_tracker_tcp.ko ] || { echo -e "\033[33m  LOG       Missing "/$(SYSTEM_DIR)"/include/modules/net/ubicom_streamengine_tracker_tcp.ko\033[0m"; exit 1; }; \
-		echo  "  CHECK     "/$(SYSTEM_DIR)"/include/modules/net/ubicom_streamengine_tracker_udp.ko"; \
-		[ -s $(SOURCE)/$(SYSTEM_DIR)/include/modules/net/ubicom_streamengine_tracker_udp.ko ] || { echo -e "\033[33m  LOG       Missing "/$(SYSTEM_DIR)"/include/modules/net/ubicom_streamengine_tracker_udp.ko\033[0m"; exit 1; }; \
-		echo  "  CHECK     "/$(SYSTEM_DIR)"/include/modules/net/ubicom_streamengine_tracker_datagram.ko"; \
-		[ -s $(SOURCE)/$(SYSTEM_DIR)/include/modules/net/ubicom_streamengine_tracker_datagram.ko ] || { echo -e "\033[33m  LOG       Missing "/$(SYSTEM_DIR)"/include/modules/net/ubicom_streamengine_tracker_datagram.ko\033[0m"; exit 1; }; \
-		echo  "  CHECK     "/$(SYSTEM_DIR)"/include/modules/net/ubicom_streamengine_classifier_default.ko"; \
-		[ -s $(SOURCE)/$(SYSTEM_DIR)/include/modules/net/ubicom_streamengine_classifier_default.ko ] || { echo -e "\033[33m  LOG       Missing "/$(SYSTEM_DIR)"/include/modules/net/ubicom_streamengine_classifier_default.ko\033[0m"; exit 1; }; \
-		echo  "  CHECK     "/$(SYSTEM_DIR)"/include/modules/net/ubicom_streamengine_classifier_user_rules.ko"; \
-		[ -s $(SOURCE)/$(SYSTEM_DIR)/include/modules/net/ubicom_streamengine_classifier_user_rules.ko ] || { echo -e "\033[33m  LOG       Missing "/$(SYSTEM_DIR)"/include/modules/net/ubicom_streamengine_classifier_user_rules.ko\033[0m"; exit 1; }; \
-		echo  "  CHECK     "/$(SYSTEM_DIR)"/include/modules/net/ubicom_streamengine_classifier_bittorrent.ko"; \
-		[ -s $(SOURCE)/$(SYSTEM_DIR)/include/modules/net/ubicom_streamengine_classifier_bittorrent.ko ] || { echo -e "\033[33m  LOG       Missing "/$(SYSTEM_DIR)"/include/modules/net/ubicom_streamengine_classifier_bittorrent.ko\033[0m"; exit 1; }; \
-		echo  "  CHECK     "/$(SYSTEM_DIR)"/include/modules/net/ubicom_streamengine_classifier_http.ko"; \
-		[ -s $(SOURCE)/$(SYSTEM_DIR)/include/modules/net/ubicom_streamengine_classifier_http.ko ] || { echo -e "\033[33m  LOG       Missing "/$(SYSTEM_DIR)"/include/modules/net/ubicom_streamengine_classifier_http.ko\033[0m"; exit 1; }; \
-		echo  "  CHECK     "/$(SYSTEM_DIR)"/include/modules/net/ubicom_streamengine_classifier_http_content.ko"; \
-		[ -s $(SOURCE)/$(SYSTEM_DIR)/include/modules/net/ubicom_streamengine_classifier_http_content.ko ] || { echo -e "\033[33m  LOG       Missing "/$(SYSTEM_DIR)"/include/modules/net/ubicom_streamengine_classifier_http_content.ko\033[0m"; exit 1; }; \
-		echo  "  CHECK     "/$(SYSTEM_DIR)"/include/modules/net/ubicom_streamengine_classifier.ko"; \
-		[ -s $(SOURCE)/$(SYSTEM_DIR)/include/modules/net/ubicom_streamengine_classifier.ko ] || { echo -e "\033[33m  LOG       Missing "/$(SYSTEM_DIR)"/include/modules/net/ubicom_streamengine_classifier.ko\033[0m"; exit 1; }; \
-	fi
-	@if [ "$(CONFIG_UBICOM32_MODULE_SHAPER)" == "y" ]; then \
-		echo  "  CHECK     "/$(SYSTEM_DIR)"/include/modules/net/sch_ubicom_streamengine.ko"; \
-		[ -s $(SOURCE)/$(SYSTEM_DIR)/include/modules/net/sch_ubicom_streamengine.ko ] || { echo -e "\033[33m  LOG       Missing "/	$(SYSTEM_DIR)"/include/modules/net/sch_ubicom_streamengine.ko\033[0m"; exit 1; }; \
+		fi; \
+		if [ "$(CONFIG_NETWORK_HARDWARE_IPV4)" == "y" ] || [ "$(CONFIG_NETWORK_HARDWARE_IPV6)" == "y" ]; then \
+			if [ "$(CONFIG_NETWORK_HARDWARE_QOS)" == "y" ]; then \
+				echo  "  CHECK     "/$(SYSTEM_DIR)"/include/modules/net/ubicom_streamengine_tracker.ko"; \
+				[ -s $(SOURCE)/$(SYSTEM_DIR)/include/modules/net/ubicom_streamengine_tracker.ko ] || { echo -e "\033[33m  LOG       Missing "/$(SYSTEM_DIR)"/include/modules/net/ubicom_streamengine_tracker.ko\033[0m"; exit 1; }; \
+				echo  "  CHECK     "/$(SYSTEM_DIR)"/include/modules/net/ubicom_streamengine_db.ko"; \
+				[ -s $(SOURCE)/$(SYSTEM_DIR)/include/modules/net/ubicom_streamengine_db.ko ] || { echo -e "\033[33m  LOG       Missing "/$(SYSTEM_DIR)"/include/modules/net/ubicom_streamengine_db.ko\033[0m"; exit 1; }; \
+				echo  "  CHECK     "/$(SYSTEM_DIR)"/include/modules/net/ubicom_streamengine_tracker_tcp.ko"; \
+				[ -s $(SOURCE)/$(SYSTEM_DIR)/include/modules/net/ubicom_streamengine_tracker_tcp.ko ] || { echo -e "\033[33m  LOG       Missing "/$(SYSTEM_DIR)"/include/modules/net/ubicom_streamengine_tracker_tcp.ko\033[0m"; exit 1; }; \
+				echo  "  CHECK     "/$(SYSTEM_DIR)"/include/modules/net/ubicom_streamengine_tracker_udp.ko"; \
+				[ -s $(SOURCE)/$(SYSTEM_DIR)/include/modules/net/ubicom_streamengine_tracker_udp.ko ] || { echo -e "\033[33m  LOG       Missing "/$(SYSTEM_DIR)"/include/modules/net/ubicom_streamengine_tracker_udp.ko\033[0m"; exit 1; }; \
+				echo  "  CHECK     "/$(SYSTEM_DIR)"/include/modules/net/ubicom_streamengine_tracker_datagram.ko"; \
+				[ -s $(SOURCE)/$(SYSTEM_DIR)/include/modules/net/ubicom_streamengine_tracker_datagram.ko ] || { echo -e "\033[33m  LOG       Missing "/$(SYSTEM_DIR)"/include/modules/net/ubicom_streamengine_tracker_datagram.ko\033[0m"; exit 1; }; \
+				echo  "  CHECK     "/$(SYSTEM_DIR)"/include/modules/net/ubicom_streamengine_classifier_default.ko"; \
+				[ -s $(SOURCE)/$(SYSTEM_DIR)/include/modules/net/ubicom_streamengine_classifier_default.ko ] || { echo -e "\033[33m  LOG       Missing "/$(SYSTEM_DIR)"/include/modules/net/ubicom_streamengine_classifier_default.ko\033[0m"; exit 1; }; \
+				echo  "  CHECK     "/$(SYSTEM_DIR)"/include/modules/net/ubicom_streamengine_classifier_user_rules.ko"; \
+				[ -s $(SOURCE)/$(SYSTEM_DIR)/include/modules/net/ubicom_streamengine_classifier_user_rules.ko ] || { echo -e "\033[33m  LOG       Missing "/$(SYSTEM_DIR)"/include/modules/net/ubicom_streamengine_classifier_user_rules.ko\033[0m"; exit 1; }; \
+				echo  "  CHECK     "/$(SYSTEM_DIR)"/include/modules/net/ubicom_streamengine_classifier_bittorrent.ko"; \
+				[ -s $(SOURCE)/$(SYSTEM_DIR)/include/modules/net/ubicom_streamengine_classifier_bittorrent.ko ] || { echo -e "\033[33m  LOG       Missing "/$(SYSTEM_DIR)"/include/modules/net/ubicom_streamengine_classifier_bittorrent.ko\033[0m"; exit 1; }; \
+				echo  "  CHECK     "/$(SYSTEM_DIR)"/include/modules/net/ubicom_streamengine_classifier_http.ko"; \
+				[ -s $(SOURCE)/$(SYSTEM_DIR)/include/modules/net/ubicom_streamengine_classifier_http.ko ] || { echo -e "\033[33m  LOG       Missing "/$(SYSTEM_DIR)"/include/modules/net/ubicom_streamengine_classifier_http.ko\033[0m"; exit 1; }; \
+				echo  "  CHECK     "/$(SYSTEM_DIR)"/include/modules/net/ubicom_streamengine_classifier_http_content.ko"; \
+				[ -s $(SOURCE)/$(SYSTEM_DIR)/include/modules/net/ubicom_streamengine_classifier_http_content.ko ] || { echo -e "\033[33m  LOG       Missing "/$(SYSTEM_DIR)"/include/modules/net/ubicom_streamengine_classifier_http_content.ko\033[0m"; exit 1; }; \
+				echo  "  CHECK     "/$(SYSTEM_DIR)"/include/modules/net/ubicom_streamengine_classifier.ko"; \
+				[ -s $(SOURCE)/$(SYSTEM_DIR)/include/modules/net/ubicom_streamengine_classifier.ko ] || { echo -e "\033[33m  LOG       Missing "/$(SYSTEM_DIR)"/include/modules/net/ubicom_streamengine_classifier.ko\033[0m"; exit 1; }; \
+			fi; \
+			if [ "$(CONFIG_NETWORK_HARDWARE_SHAPER)" == "y" ]; then \
+				echo  "  CHECK     "/$(SYSTEM_DIR)"/include/modules/net/sch_ubicom_streamengine.ko"; \
+				[ -s $(SOURCE)/$(SYSTEM_DIR)/include/modules/net/sch_ubicom_streamengine.ko ] || { echo -e "\033[33m  LOG       Missing "/	$(SYSTEM_DIR)"/include/modules/net/sch_ubicom_streamengine.ko\033[0m"; exit 1; }; \
+			fi; \
+		fi; \
 	fi

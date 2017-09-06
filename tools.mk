@@ -37,12 +37,16 @@ make_tools:
 
 clean_tools:
 	@echo -e "\033[32m  LOG       Tools\033[0m"
+	@echo  "  CLEAN     "/$(TOOLS_DIR)/src/kconfig
+	@$(MAKE) -C $(SOURCE)/$(TOOLS_DIR)/src/kconfig clean $(DEBUG)
+	@echo  "  CLEAN     "/$(TOOLS_DIR)/bin/mconf
+	@rm -f $(SOURCE)/$(TOOLS_DIR)/bin/mconf
 	@echo  "  CLEAN     "/$(TOOLS_DIR)/src/lzma
-	@$(MAKE) -C $(SOURCE)/$(TOOLS_DIR)/src/lzma clean
+	@$(MAKE) -C $(SOURCE)/$(TOOLS_DIR)/src/lzma clean $(DEBUG)
 	@echo  "  CLEAN     "/$(TOOLS_DIR)/bin/lzma
 	@rm -f $(SOURCE)/$(TOOLS_DIR)/bin/lzma
 	@echo  "  CLEAN     "/$(TOOLS_DIR)/src/squashfs
-	@$(MAKE) -C $(SOURCE)/$(TOOLS_DIR)/src/squashfs clean
+	@$(MAKE) -C $(SOURCE)/$(TOOLS_DIR)/src/squashfs clean $(DEBUG)
 	@echo  "  CLEAN     "/$(TOOLS_DIR)/bin/mksquashfs
 	@rm -f $(SOURCE)/$(TOOLS_DIR)/bin/mksquashfs
 	@echo  "  CLEAN     "/$(TOOLS_DIR)/bin/unsquashfs

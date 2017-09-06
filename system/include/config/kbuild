@@ -1,0 +1,195 @@
+#
+# For a description of the syntax of this configuration file,
+# see Documentation/kbuild/kconfig-language.txt.
+#
+
+mainmenu "WD900X Configuration Tool"
+
+menu "Board"
+
+choice
+
+prompt "Model"
+
+config BOARD_WDBWVK0000NSL
+	bool "MyNet N900 HD [WDBWVK0000NSL]"
+	select NETWORK 
+	help
+		MyNet N900 WDBWVK0000NSL
+
+#config BOARD_WDBKSP0010BCH
+#	bool "MyNet N900 Central 1TB [WDBKSP0010BCH]"
+#	select NETWORK
+#	help
+#		MyNet N900 1TB WDBKSP0010BCH
+
+#config BOARD_WDBKSP0020BCH
+#	bool "MyNet N900 Central 2TB [WDBKSP0020BCH]"	
+#	select NETWORK
+#	help
+#		MyNet N900 2TB WDBKSP0020BCH
+
+endchoice
+
+endmenu
+
+menu "Kernel"
+
+config NETWORK
+	bool "Network"
+	default y
+	select NETWORK_IPV4 if !NETWORK_IPV6
+	help
+		Kernel networking support
+
+config NETWORK_IPV4
+	bool "IPv4"
+	depends on NETWORK && !NETWORK_IPV6_ONLY
+	default y
+	help
+		Enables IPv4 options and Kernel IP support
+
+config NETWORK_IPV6
+	bool "IPv6"
+	depends on NETWORK
+	default y
+	help
+		Enables IPv6 options and Kernel IP support
+
+config NETWORK_IPV6_ONLY
+	bool "IPv6 only"
+	depends on NETWORK_IPV6
+	default n	
+	help
+		Disables IPv4 options and Kernel IPv4 support. Uses only IPv6 stack.
+
+config NETWORK_HARDWARE
+	bool "Network offload"
+	depends on NETWORK && (NETWORK_IPV4 || NETWORK_IPV6)
+	help
+		Hardware Network Acceleration for IP packets
+
+config NETWORK_HARDWARE_IPV4
+	bool "IPv4 forwarding"
+	depends on NETWORK && NETWORK_IPV4 && !NETWORK_IPV6_ONLY && NETWORK_HARDWARE	
+	default y
+	help
+		Network Acceleration for IPv4 packets
+
+config NETWORK_HARDWARE_IPV6
+	bool "IPv6 forwarding"
+	depends on NETWORK && NETWORK_IPV6 && NETWORK_HARDWARE
+	default y
+	help
+		Network Acceleration for IPv6 packets
+
+config NETWORK_HARDWARE_QOS
+	bool "Quality of service"
+	depends on NETWORK && NETWORK_HARDWARE && (NETWORK_HARDWARE_IPV4 || NETWORK_HARDWARE_IPV6)
+	default n
+	help
+		Hardware QOS Acceleration for IP packets
+
+config NETWORK_HARDWARE_SHAPER
+	bool "Traffic shaping" 
+	depends on NETWORK && NETWORK_HARDWARE && (NETWORK_HARDWARE_IPV4 || NETWORK_HARDWARE_IPV6)
+	default n
+	help
+		Traffic Shaping Acceleration for IP packets
+
+config CRYPTO
+	bool "Cryptography"
+	default n
+	help
+		Kernel cryptography support
+
+config CRYPTO_3DES
+	bool "3DES"
+	depends on CRYPTO	
+	default n
+	help
+		Crypto DES and 3DES implementation
+
+config CRYPTO_AES
+	bool "AES"
+	depends on CRYPTO	
+	default n
+	help
+		Crypto AES implementation
+
+config CRYPTO_MD5
+	bool "MD5"
+	depends on CRYPTO	
+	default n
+	help
+		Crypto MD5 implementation
+
+config CRYPTO_SHA1
+	bool "SHA1"
+	depends on CRYPTO	
+	default n
+	help
+		Crypto SHA1 implementation
+
+config CRYPTO_SHA2
+	bool "SHA2"
+	depends on CRYPTO	
+	default n
+	help
+		Crypto SHA2 implementation
+
+config CRYPTO_HARDWARE
+	bool "Cryptography offload"
+	depends on CRYPTO
+	default n
+	help
+		Hardware Crypto Acceleration
+
+config CRYPTO_HARDWARE_3DES
+	bool "3DES"
+	depends on CRYPTO && CRYPTO_HARDWARE	
+	default n
+	help
+		Hardware Crypto DES and 3DES implementation
+
+config CRYPTO_HARDWARE_AES
+	bool "AES"
+	depends on CRYPTO && CRYPTO_HARDWARE	
+	default y
+	help
+		Hardware Crypto AES implementation
+
+config CRYPTO_HARDWARE_MD5
+	bool "MD5"
+	depends on CRYPTO && CRYPTO_HARDWARE	
+	default n
+	help
+		Hardware Crypto MD5 implementation
+
+config CRYPTO_HARDWARE_SHA1
+	bool "SHA1"
+	depends on CRYPTO && CRYPTO_HARDWARE	
+	default y
+	help
+		Hardware Crypto SHA1 implementation
+
+config CRYPTO_HARDWARE_SHA2
+	bool "SHA2"
+	depends on CRYPTO && CRYPTO_HARDWARE	
+	default y
+	help
+		Hardware Crypto SHA2 implementation.
+		Implements SHA224, SHA256, SHA384 and SHA512
+	  	algorithms
+
+endmenu
+
+menu "System"
+
+config BUSYBOX
+	bool "Busybox"
+	default y
+	help
+		Busybox system application
+endmenu
+
