@@ -4,6 +4,11 @@
 
 Work in progress!
 
+Warning: It is not recommended to flash any router!
+         It is an unfinished work!
+         I take no responsability of any damage caused to your device.
+         Use at your own risk!
+
 =================================
  GPL Notice
 =================================
@@ -13,13 +18,17 @@ This repository uses the following sources:
     Github.com/patrick-ken
     https://github.com/patrick-ken/MyNet_N900/blob/master/ReadMeFirst.txt
     
-    Western Digital My Net N900 GPL Firmware release (@Alphanetworks)    
-    https://github.com/kizukukoto/WD900GPL
+    Western Digital My Net N900 GPL Firmware release (@Alphanetworks)
+    Western Digital My Net N900 Central 1TB/2TB GPL Firmware release (@Alphanetworks)
+    Dlink DIR-857 GPL Firmware release (@Cameo)
+    Dlink DIR-827 GPL Firmware release (@Cameo)
+    Dlink DIR-657 GPL Firmware release (@Cameo)
+    https://github.com/kizukukoto/UBI32GPL
     
 Available source code:
 
     Github.com/kizukukoto
-    https://github.com/kizukukoto/WD900X
+    https://github.com/kizukukoto/UBI32X
     
 ================================
  Introduction
@@ -41,7 +50,7 @@ This file will show you how to build the GPL linux system.
                     # exit
     4. Create and change into directory where you'll put the source code (~/Development works fine)
     5. Clone the custom firmware repository from GitHub.
-            $ git clone https://github.com/kizukukoto/WD900X.git
+            $ git clone https://github.com/kizukukoto/UBI32X.git
     
 ================================
  Setup build environment
@@ -49,7 +58,7 @@ This file will show you how to build the GPL linux system.
 
     1. Login as a normal user.
     2. Navigate to your source code directory.
-	    $ cd /WD900X
+	    $ cd /UBI32X
     3. Switch to root permission (superuser mode)
             $ su
     4. Install fakeroot
@@ -66,11 +75,13 @@ This file will show you how to build the GPL linux system.
 
     1. Login as a normal user.
     2. Navigate to your source code directory.
-	    $ cd /WD900X
+	    $ cd /UBI32X
     3. Load the necessary environment variables.
             $ source ./setupenv
-    4. Building the image
-	    $ make
+    4. Configuration
+	    $ make config
+    5. Building the image
+            $ make
     
     After make finishes successfully, you will find the image file in ./build/release    
 
