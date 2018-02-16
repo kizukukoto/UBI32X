@@ -173,18 +173,12 @@ config NOBOARD
 		Default. Don't select any board specific config. Will not build unless you change!
 
 # Add your boards here
-source "arch/ubicom32/mach-ip5k/Kconfig"
 source "arch/ubicom32/mach-ip7k/Kconfig"
 source "arch/ubicom32/mach-ip8k/Kconfig"
 
 endchoice
 
 # Add board specific Kconfigs here
-source "arch/ubicom32/mach-ip5k/Kconfig.board"
-source "arch/ubicom32/mach-ip7k/Kconfig.board"
-source "arch/ubicom32/mach-ip8k/Kconfig.board"
-source "arch/ubicom32/mach-common/Kconfig.VDC"
-source "arch/ubicom32/mach-common/Kconfig.board"
 
 comment "Kernel Options"
 config MMU

@@ -57,37 +57,8 @@ clean: clean_kernel clean_system clean_tools clean_bootloader clean_release clea
 	@echo  "  CLEAN     "/$(BUILD_DIR)
 	@rm -rf $(SOURCE)/$(BUILD_DIR)
 
-config:
-	@echo -e "\033[32m  LOG       Config\033[0m"
-	@[ -s $(SOURCE)/$(TOOLS_DIR)/bin/mconf ] || { \
-		echo  "  MAKE      "/$(TOOLS_DIR)/src/kconfig; \
-		$(MAKE) -C $(SOURCE)/$(TOOLS_DIR)/src/kconfig $(DEBUG); \
-		echo  "  CHECK     "/$(TOOLS_DIR)/src/kconfig/kconfig-2.6.38/scripts/kconfig/mconf; \
-		if [ -s $(SOURCE)/$(TOOLS_DIR)/src/kconfig/kconfig-2.6.38/scripts/kconfig/mconf ]; then \
-			echo  "  COPY      "/$(TOOLS_DIR)/src/kconfig/kconfig-2.6.38/scripts/kconfig/mconf; \
-			cp $(SOURCE)/$(TOOLS_DIR)/src/kconfig/kconfig-2.6.38/scripts/kconfig/mconf $(SOURCE)/$(TOOLS_DIR)/bin; \
-		else \
-			echo -e "\033[33m  LOG       Missing "/$(TOOLS_DIR)/src/kconfig/kconfig-2.6.38/scripts/kconfig/mconf"\033[0m"; \
-			exit 1; \
-		fi \
-	}
-	@$(SOURCE)/$(TOOLS_DIR)/bin/mconf $(SYSTEM_DIR)/include/config/kbuild
-	@echo  "  UPDATE    "/$(CONFIG_DIR)
+-include $(SOURCE)/config.mk
 
-clean_config:
-	@echo -e "\033[32m  LOG       Config\033[0m"
-	@echo  "  CLEAN     "/$(CONFIG_DIR)
-	@rm -f $(SOURCE)/$(CONFIG_DIR)/kernel.conf
-	@rm -f $(SOURCE)/$(CONFIG_DIR)/system.conf
-	@rm -f $(SOURCE)/$(CONFIG_DIR)/busybox.conf
-	@rm -f $(SOURCE)/$(CONFIG_DIR)/bootloader.conf
-	@rm -f $(SOURCE)/$(CONFIG_DIR)/release.conf
-	@cp $(SOURCE)/$(CONFIG_DIR)/default/kernel.conf $(SOURCE)/$(CONFIG_DIR)
-	@cp $(SOURCE)/$(CONFIG_DIR)/default/system.conf $(SOURCE)/$(CONFIG_DIR)
-	@cp $(SOURCE)/$(CONFIG_DIR)/default/busybox.conf $(SOURCE)/$(CONFIG_DIR)
-	@cp $(SOURCE)/$(CONFIG_DIR)/default/bootloader.conf $(SOURCE)/$(CONFIG_DIR)
-	@cp $(SOURCE)/$(CONFIG_DIR)/default/release.conf $(SOURCE)/$(CONFIG_DIR)
-
-.PHONY: all toolchain environment dependency make_filesystem make_kernel make_system make_tools make_bootloader make_release clean clean_kernel clean_system clean_tools clean_bootloader clean_release clean_filesystem config clean_config
+.PHONY: all toolchain environment dependency make_filesystem make_kernel make_system make_tools make_bootloader make_release clean clean_kernel clean_system clean_tools clean_bootloader clean_release clean_filesystem config clean_config 
     
     

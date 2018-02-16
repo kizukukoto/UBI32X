@@ -1,0 +1,423 @@
+#
+# For a description of the syntax of this configuration file,
+# see Documentation/kbuild/kconfig-language.txt.
+#
+
+mainmenu "UBI32X Configuration Tool"
+
+menu "Board"
+
+choice
+
+prompt "Model"
+
+#config BOARD_UNKNOWN
+#	bool "Custom"
+#	select ARCH_UBICOM32
+#	help
+#		Custom board
+
+#config BOARD_DIR657A1
+#	bool "Dlink 657 HD 1000 [A1]"
+#	select ARCH_UBICOM32 
+#	select ARCH_UBICOM32_V4
+#	select ARCH_UBICOM32_IP7160U
+#	select NETWORK
+#	help
+#		Dlink DIR-657 A1
+
+#config BOARD_DIR827A1
+#	bool "Dlink 827 HD 2000 [A1]"
+#	select ARCH_UBICOM32 
+#	select ARCH_UBICOM32_V5
+#	select ARCH_UBICOM32_IP8000AU
+#	select NETWORK
+#	help
+#		Dlink DIR-827 A1
+
+#config BOARD_DIR857A1
+#	bool "Dlink 857 HD 3000 [A1]"
+#	select ARCH_UBICOM32 
+#	select ARCH_UBICOM32_V5
+#	select ARCH_UBICOM32_IP8000AU
+#	select NETWORK
+#	help
+#		Dlink DIR-857 A1
+
+config BOARD_WDBWVK0000NSL
+	bool "MyNet N900 HD [WDBWVK0000NSL]"
+	select ARCH_UBICOM32 
+	select ARCH_UBICOM32_V5
+	select ARCH_UBICOM32_IP8260U
+	select NETWORK 
+	help
+		MyNet N900 WDBWVK0000NSL
+
+#config BOARD_WDBKSP0010BCH
+#	bool "MyNet N900 Central 1TB [WDBKSP0010BCH]"
+#	select ARCH_UBICOM32 
+#	select ARCH_UBICOM32_V5
+#	select ARCH_UBICOM32_IP8260U
+#	select NETWORK
+#	help
+#		MyNet N900 1TB WDBKSP0010BCH
+
+#config BOARD_WDBKSP0020BCH
+#	bool "MyNet N900 Central 2TB [WDBKSP0020BCH]"	
+#	select ARCH_UBICOM32 
+#	select ARCH_UBICOM32_V5
+#	select ARCH_UBICOM32_IP8260U
+#	select NETWORK
+#	help
+#		MyNet N900 2TB WDBKSP0020BCH
+
+endchoice
+
+endmenu
+
+menu "Kernel"
+
+menu "Architecture"
+
+config ARCH_UBICOM32
+	bool "Ubicom 32"
+	default y
+	help
+		Ubicom32 architecture
+choice 
+
+prompt "Revision"
+
+depends on ARCH_UBICOM32
+
+#config ARCH_UBICOM32_V4
+#	bool "v4"
+#	depends on ARCH_UBICOM32 && (BOARD_DIR657A1 || BOARD_UNKNOWN)
+#	help
+#		Ubicom32 revision 4
+
+config ARCH_UBICOM32_V5
+	bool "v5"
+	depends on ARCH_UBICOM32 && (BOARD_WDBWVK0000NSL || BOARD_WDBKSP0010BCH || BOARD_WDBKSP0020BCH  || BOARD_DIR827A1 || BOARD_DIR857A1 || BOARD_UNKNOWN)
+	help
+		Ubicom32 revision 5
+endchoice
+
+choice
+
+depends on ARCH_UBICOM32
+
+prompt "Processor"
+
+#config ARCH_UBICOM32_IP7160U
+#	bool "IP7160U"
+#	depends on ARCH_UBICOM32 && ARCH_UBICOM32_V4 && (BOARD_DIR657A1 || BOARD_UNKNOWN)
+#	help 
+#		Ubicom32 v4 IP7160U (X Hardware threads)
+
+#config ARCH_UBICOM32_IP8000AU
+#	bool "IP8000U"
+#	depends on ARCH_UBICOM32 && ARCH_UBICOM32_V5 && (BOARD_DIR827A1 || BOARD_DIR857A1 || BOARD_UNKNOWN)
+#	help 
+#		Ubicom32 v5 IP8000U (4 Hardware threads)
+
+config ARCH_UBICOM32_IP8260U
+	bool "IP8260U"
+	depends on ARCH_UBICOM32 && ARCH_UBICOM32_V5 && (BOARD_WDBWVK0000NSL || BOARD_WDBKSP0010BCH || BOARD_WDBKSP0020BCH  || BOARD_UNKNOWN)
+	help 
+		Ubicom32 v5 IP8260UU (5 Hardware threads)
+
+endchoice
+
+endmenu
+
+menu "Cryptography"
+
+#config CRYPTO
+#	bool "Cryptography"
+#	depends on CRYPTO_3DES || CRYPTO_AES || CRYPTO_MD5 || CRYPTO_SHA1 || CRYPTO_SHA2 || CRYPTO_HARDWARE
+#	help
+#		Kernel cryptography support
+
+#config CRYPTO_3DES
+#	bool "3DES"
+#	select CRYPTO
+#	default n
+#	help
+#		Crypto DES and 3DES implementation
+
+#config CRYPTO_AES
+#	bool "AES"
+#	select CRYPTO	
+#	default n
+#	help
+#		Crypto AES implementation
+
+#config CRYPTO_MD5
+#	bool "MD5"
+#	select CRYPTO	
+#	default n
+#	help
+#		Crypto MD5 implementation
+
+#config CRYPTO_SHA1
+#	bool "SHA1"
+#	select CRYPTO	
+#	default n
+#	help
+#		Crypto SHA1 implementation
+
+#config CRYPTO_SHA2
+#	bool "SHA2"
+#	select CRYPTO
+#	default n
+#	help
+#		Crypto SHA2 implementation
+
+#config CRYPTO_HARDWARE
+#	bool "Hardware"
+#	select CRYPTO
+#	depends on ARCH_UBICOM32 && ARCH_UBICOM32_V5
+#	default n
+#	help
+#		Hardware Crypto Acceleration
+
+#config CRYPTO_HARDWARE_3DES
+#	bool "3DES"
+#	depends on CRYPTO_HARDWARE	
+#	default n
+#	help
+#		Hardware Crypto DES and 3DES implementation
+
+#config CRYPTO_HARDWARE_AES
+#	bool "AES"
+#	depends on CRYPTO_HARDWARE	
+#	default y
+#	help
+#		Hardware Crypto AES implementation
+
+#config CRYPTO_HARDWARE_MD5
+#	bool "MD5"
+#	depends on CRYPTO_HARDWARE	
+#	default n
+#	help
+#		Hardware Crypto MD5 implementation
+
+#config CRYPTO_HARDWARE_SHA1
+#	bool "SHA1"
+#	depends on CRYPTO_HARDWARE	
+#	default y
+#	help
+#		Hardware Crypto SHA1 implementation
+
+#config CRYPTO_HARDWARE_SHA2
+#	bool "SHA2"
+#	depends on CRYPTO_HARDWARE	
+#	default y
+#	help
+#		Hardware Crypto SHA2 implementation.
+#		Implements SHA224, SHA256, SHA384 and SHA512
+#	  	algorithms
+
+endmenu
+
+menu "Network"
+
+menu "IP Support"
+
+config NETWORK
+	bool "IP"
+	default y
+	select NETWORK_IPV4 if !NETWORK_IPV6
+	select NETWORK_HARDWARE_IPV4 if NETWORK_IPV4 && !NETWORK_IPV6_ONLY && NETWORK_HARDWARE && !NETWORK_HARDWARE_IPV6
+	select NETWORK_HARDWARE_IPV6 if NETWORK_IPV6 && NETWORK_HARDWARE && !NETWORK_IPV4
+	select SWITCH
+	help
+		Kernel networking support
+
+config NETWORK_IPV4
+	bool "IPv4"
+	depends on NETWORK && !NETWORK_IPV6_ONLY
+	default n
+	help
+		Enables IPv4 options and Kernel IP support
+
+config NETWORK_IPV6
+	bool "IPv6"
+	depends on NETWORK
+	default y
+	help
+		Enables IPv6 options and Kernel IP support
+
+config NETWORK_IPV6_ONLY
+	bool "IPv6 only"
+	depends on NETWORK_IPV6
+	default n	
+	help
+		Disables IPv4 options and Kernel IPv4 support. Uses only IPv6 stack.
+
+config NETWORK_HARDWARE
+	bool "Hardware"
+	depends on ARCH_UBICOM32 && ARCH_UBICOM32_V5 # && NETWORK && (NETWORK_IPV4 || NETWORK_IPV6)
+	help
+		Hardware Network Acceleration for IP packets
+
+config NETWORK_HARDWARE_IPV4
+	bool "IPv4 forwarding"
+	depends on NETWORK && NETWORK_HARDWARE && NETWORK_IPV4
+	default n
+	help
+		Network Acceleration for IPv4 packets
+
+config NETWORK_HARDWARE_IPV6
+	bool "IPv6 forwarding"
+	depends on NETWORK && NETWORK_HARDWARE && NETWORK_IPV6
+	default n
+	help
+		Network Acceleration for IPv6 packets
+
+config NETWORK_HARDWARE_QOS
+	bool "Quality of service"
+	depends on NETWORK && NETWORK_HARDWARE && (NETWORK_HARDWARE_IPV4 || NETWORK_HARDWARE_IPV6)
+	default n
+	help
+		Hardware QOS Acceleration for IP packets
+
+config NETWORK_HARDWARE_SHAPER
+	bool "Traffic shaping" 
+	depends on NETWORK && NETWORK_HARDWARE && (NETWORK_HARDWARE_IPV4 || NETWORK_HARDWARE_IPV6)
+	default n
+	help
+		Traffic Shaping Acceleration for IP packets
+
+endmenu
+
+menu "IPSec Support"
+
+#config NETWORK_IPSEC
+#	bool "IPsec"
+#	select NETWORK
+#	default n
+#	help
+#		IPSec support
+
+#config NETWORK_HARDWARE_IPSEC
+#	bool "Hardware"
+#	depends on NETWORK_IPSEC
+#	default n
+#	help
+#		IPSec hardware offload
+
+endmenu
+
+menu "PPP Support"
+
+#config NETWORK_PPP
+#	bool "PPP"
+#	select NETWORK
+#	default n
+#	help
+#		PPP support
+
+endmenu
+
+endmenu
+
+menu "Drivers"
+
+menu "Switch"
+
+config SWITCH
+	bool "Switch"
+	select SWITCH_AR8327N if !SWITCH_AR8316
+	depends on BOARD_WDBWVK0000NSL || BOARD_WDBKSP0010BCH || BOARD_WDBKSP0020BCH  || BOARD_DIR827A1 || BOARD_DIR857A1 || BOARD_DIR657A1 || BOARD_UNKNOWN
+	default n
+	help
+		Network switch support
+
+config SWITCH_AR8327N
+	bool "AR8327N"
+	depends on SWITCH && (BOARD_WDBWVK0000NSL || BOARD_WDBKSP0010BCH || BOARD_WDBKSP0020BCH  || BOARD_DIR827A1 || BOARD_DIR857A1 || BOARD_UNKNOWN)
+	default n
+	help
+		Network switch AR8327N
+
+#config SWITCH_AR8316
+#	bool "AR8316"
+#	depends on SWITCH && (BOARD_DIR657A1 || BOARD_UNKNOWN)
+#	default n
+#	help
+#		Network switch AR8316
+
+endmenu
+
+endmenu
+
+endmenu
+
+menu "System"
+
+menu "Shell"
+
+config BUSYBOX
+	bool "Busybox"
+	default y
+	help
+		Busybox system application
+endmenu
+
+menu "DNS"
+
+depends on NETWORK
+
+#config DNS
+#	bool "DNS"
+#	select DNS_PROXY
+#	default y
+#	help
+#		DNS services
+
+#config DNS_PROXY
+#	bool "Proxy"
+#	depends on DNS
+#	default y
+#	help
+#		DNSMAsq Proxy server for LAN
+#		Scripts and options will be configured based on IPv4/IPv6 selection
+
+endmenu
+
+menu "DHCP"
+
+depends on NETWORK
+
+#config DHCP
+#	bool "DHCP"
+#	select DHCP_CLIENT if !DHCP_SERVER
+#	default y
+#	help
+#		DHCP services for LAN and WAN
+#		DHCP Client will be selected by default. If you do not
+#		need DHCP at all, please unselect this option
+
+#config DHCP_SERVER
+#	bool "Server"
+#	depends on DHCP
+#	default y
+#	help
+#		DNSMAsq DHCP server for LAN IPv4/IPv6
+#		Scripts and options will be configured based on kernel network settings
+
+#config DHCP_CLIENT
+#	bool "Client"
+#	depends on DHCP
+#	default y
+#	help
+#		DNSMAsq DHCP client for WAN IPv4/IPv6
+#		Scripts and options will be configured based on kernel network settings
+
+endmenu
+
+endmenu
+
+
